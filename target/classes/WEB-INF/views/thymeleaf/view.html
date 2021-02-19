@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title> My First Thymeleaf Page. </title>
+</head>
+<body>
+	<!-- div th:insert="~{ menu :: fragment }"></div-->
+	<!-- div th:include="menu :: fragment"></div-->
+	<!-- La ligne ci-dessous peut être commentée. -->
+	<div th:replace="~{ thymeleaf/menu :: #premierMenu }"></div>
+	_____________________________________
+
+	<h1 th:text="#{ welcome.text }"></h1>
+	_____________________________________
+	<div th:object="${ personne }">
+		<span th:text="${ personne.num }"></span> <span
+			th:text="*{ #object.nom }"></span> <span th:text="*{ prenom }"></span>
+	</div>
+	<div th:if="${ message.length() >= 5 }">
+		<p th:text="${ message }"></p>
+	</div>
+	<div th:if="${ message.length() >= 15 }" th:text="long"></div>
+	<div th:unless="${ message.length() >= 15 }" th:text="court"></div>
+	<div th:switch="${ message.length() }">
+		<p th:case="1">Un</p>
+		<p th:case="2">Deux</p>
+		<p th:case="*">Autre</p>
+		<div th:each="perso : ${ personnes }">
+			<span th:text="${ perso.nom }"></span> <span
+				th:text="${ perso['prenom'] }"></span>
+		</div>
+	</div>
+	<div th:each="perso, status : ${ personnes }">
+		<span th:text="${ status.index }"></span> <span
+			th:text="${ status.count }"></span> <span th:text="${ perso.nom }"></span>
+		<span th:text="${ perso['prenom'] }"></span>
+	</div>
+	<div th:with="variable=${ message.length() }">
+		<p>
+			Le message de bienvenue contient <span th:text="${ variable }">
+			</span> lettres.
+		</p>
+	</div>
+</body>
+</html>
